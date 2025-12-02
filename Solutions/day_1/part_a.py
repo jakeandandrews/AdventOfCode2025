@@ -22,7 +22,7 @@ def gauge_the_twist(twist_notation): #->vector
 def twist_the_dial(dial_position, twist): #->end_position
     return (dial_position + twist) % DIAL_SIZE
 
-def crack_the_combination(twist_list):
+def count_the_clicks(twist_list):
     clicks_felt = 0
     dial_position = START
     for twist_notation in twist_list:
@@ -33,7 +33,7 @@ def crack_the_combination(twist_list):
     return clicks_felt
 
 if __name__ == "__main__":
-    data_path = Path(__file__).parent / "data" / "day_1.txt"
+    data_path = Path(__file__).parent / "data" / "part_a.txt"
     data = genfromtxt(data_path, 'str')
-    print("THE SOLUTION IS...", crack_the_combination(data))
+    print("THE SOLUTION IS...", count_the_clicks(data))
     
