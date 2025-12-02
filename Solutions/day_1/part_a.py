@@ -1,4 +1,4 @@
-import re
+import math, re
 from numpy import genfromtxt
 from pathlib import Path
 
@@ -22,7 +22,8 @@ def gauge_the_twist(twist_notation): #->vector
 def twist_the_dial(dial_position, twist): #->end_position
     return (dial_position + twist) % DIAL_SIZE
 
-def count_the_clicks(twist_list):
+
+def lands_on_click(twist_list):
     clicks_felt = 0
     dial_position = START
     for twist_notation in twist_list:
@@ -32,8 +33,31 @@ def count_the_clicks(twist_list):
             clicks_felt += 1
     return clicks_felt
 
+def twists_through_click(start, twist):
+    if twist > 0:
+        if DIAL_SIZE - start > twist:
+            return 0
+        return (twist + start)/ DIAL_SIZE - 1 
+
+    else:
+        if start > abs(twist):
+            return 0
+        return 1 + math.floor(twist - start/DIAL_SIZE)
+    
+def start_ya_twisting(twist_list):
+    clicks_felt = 0
+    dial_position = START
+    for twist_notation in twist_list:
+        twist = gauge_the_twist(twist_notation)
+        dial_position = twist_the_dial(dial_position, twist)
+        if dial_position == FEELS_THE_CLICK:
+            clicks_felt += 1
+
+
 if __name__ == "__main__":
     data_path = Path(__file__).parent / "data" / "part_a.txt"
     data = genfromtxt(data_path, 'str')
-    print("THE SOLUTION IS...", count_the_clicks(data))
+
+    print("THE SOLUTION TO PART A IS...", lands_on_click(data))
+    print("THE SOLUTION TO PART B IS...", lands_on_click(data))
     
