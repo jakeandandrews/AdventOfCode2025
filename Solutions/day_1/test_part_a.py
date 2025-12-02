@@ -1,10 +1,10 @@
 from numpy import genfromtxt
 from pathlib import Path
 
-from part_a import solution
+from part_a import crack_the_combination
 
-dummy_data_path = Path(__file__).parent / "data" / "test.txt"
+dummy_data_path = Path(__file__).parent / "data" / "part_a_test.txt"
 dummy_data = genfromtxt(dummy_data_path, 'str')
 
 def test_dummy():
-    assert solution(dummy_data) == 3
+    assert crack_the_combination(dummy_data) == 3
